@@ -26,10 +26,13 @@
       <ion-input formControlName="repeatpassword"  type="password" placeholder="*****"></ion-input>
     </ion-item>
 
-    <a class="forgot-password" href="/src/app/pages/recover-password">recuperar contraseña</a>
+    <!-- Enlace de recuperación de contraseña -->
+    <div class="forgot-password">
+      <a [routerLink]="['/recuperar']">¿Olvidaste tu contraseña?</a>
+    </div>
 
     <ion-button expand="block" shape="round" class="login-button">
-      INICIAR SESIÓN
+      REGISTRARSE
     </ion-button>
   </div>
 
