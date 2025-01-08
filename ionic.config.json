@@ -1,0 +1,7 @@
+{
+  "name": "lavidapiercingapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
