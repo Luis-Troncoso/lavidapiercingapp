@@ -1,0 +1,40 @@
+<ion-content class="login-container">
+  <div class="header">
+    <h1>LA VIDA PIERCINGS</h1>
+    <p>Registrate para continuar</p>
+  </div>
+
+  <div class="form-container">
+    <h2>REGISTRO</h2>
+    <ion-item>
+      <ion-label position="floating">Nombre de usuario</ion-label>
+      <ion-input type="username" placeholder="ingresa tu nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input type="email" placeholder="ingresa@tu.correo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" placeholder="*****"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Repetir Contraseña</ion-label>
+      <ion-input formControlName="repeatpassword"  type="password" placeholder="*****"></ion-input>
+    </ion-item>
+
+    <a class="forgot-password" href="/src/app/pages/recover-password">recuperar contraseña</a>
+
+    <ion-button expand="block" shape="round" class="login-button">
+      INICIAR SESIÓN
+    </ion-button>
+  </div>
+
+  <div class="footer-logo">
+    <img src="assets/img/logo2.png" alt="La Vida Piercings">
+  </div>
+</ion-content>
+
