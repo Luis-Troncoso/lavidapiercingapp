@@ -7,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class ProfilePage implements OnInit {
+  username: string = 'Juan Pérez'; // El nombre de usuario puede venir de la autenticación
+  email: string = 'juan.perez@example.com'; // El correo también puede ser parte de los datos de usuario
+  phoneNumber: string = '';
+  appointments: Array<{ date: string; time: string }> = [
+    { date: '2025-01-15', time: '10:00 AM' },
+    { date: '2025-01-17', time: '03:30 PM' },
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  savePhoneNumber() {
+    if (this.phoneNumber) {
+      alert('Número de celular guardado con éxito');
+    } else {
+      alert('Por favor ingresa un número de celular');
+    }
   }
-
 }
