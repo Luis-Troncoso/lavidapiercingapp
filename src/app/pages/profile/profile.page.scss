@@ -99,6 +99,24 @@ ion-content {
     height: 100px;
     border-radius: 50%; /* Hacer la imagen circular */
   }
+
+  @media (max-width: 576px) {
+    .form-container {
+      padding: 15px;
+  
+      h2 {
+        font-size: 18px;
+      }
+  
+      ion-item {
+        margin-bottom: 10px;
+      }
+  
+      ion-button {
+        font-size: 14px;
+      }
+    }
+  }
   
 
   

@@ -1,35 +1,79 @@
 <ion-content class="home-container">
-  <ion-header>
-  </ion-header>
+    <ion-menu side="end" contentId="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>menu de contenido</ion-title>
+
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <!-- Home -->
+          <ion-item button routerLink="/inicio">
+            <ion-icon slot="start" name="home-outline"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+    
+          <!-- Piercings -->
+          <ion-item button routerLink="/piercings">
+            <ion-icon slot="start" name="fitness-outline"></ion-icon>
+            <ion-label>Piercings</ion-label>
+          </ion-item>
+    
+          <!-- Agendar -->
+          <ion-item button routerLink="/agenda">
+            <ion-icon slot="start" name="calendar-outline"></ion-icon>
+            <ion-label>Agendar Citas</ion-label>
+          </ion-item>
+    
+          <!-- Perfil -->
+          <ion-item button routerLink="/profile">
+            <ion-icon slot="start" name="person-outline"></ion-icon>
+            <ion-label>Mi Perfil</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <div class="ion-page" id="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+    </div>
+
   <div class="header">
-    <h1>Bienvenido a La Vida Piercings</h1>
-    <p>Explora y agenda 
-      tus citas fácilmente</p>
+    <h1>Bienvenido a <span class="highlight">La Vida Piercings</span></h1>
+    <p>Explora y agenda tus citas fácilmente</p>
   </div>
 
+  <!-- Contenedor para las opciones con un estilo más moderno -->
   <div class="options-container">
-    <ion-card routerLink="/piercings">
+    <ion-card routerLink="/piercings" class="option-card">
       <ion-img src="assets/img/background.jpg"></ion-img>
       <ion-card-header>
         <ion-card-title>Explorar Piercings</ion-card-title>
       </ion-card-header>
     </ion-card>
 
-    <ion-card routerLink="/agenda">
-      <ion-img src="assets/img/citas.jpg"></ion-img>
+    <ion-card routerLink="/agenda" class="option-card">
+      <ion-img src="assets/img/agenda.jpg"></ion-img>
       <ion-card-header>
         <ion-card-title>Agendar Citas</ion-card-title>
       </ion-card-header>
     </ion-card>
 
-    <ion-card routerLink="/profile">
-      <ion-img src="assets/img/perfil.jpg"></ion-img>
+    <ion-card routerLink="/profile" class="option-card">
       <ion-card-header>
         <ion-card-title>Mi Perfil</ion-card-title>
+        <ion-img src="assets/img/logo2.png"></ion-img>
       </ion-card-header>
     </ion-card>
   </div>
 
+  <!-- Footer con el logo -->
   <div class="footer-logo">
     <img src="assets/img/logo2.png" alt="La Vida Piercings">
   </div>

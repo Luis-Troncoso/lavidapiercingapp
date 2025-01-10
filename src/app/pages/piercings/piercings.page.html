@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Piercings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="piercings-container">
+    <ion-card *ngFor="let piercing of piercings">
+      <ion-img [src]="piercing.image"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{ piercing.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Precio: {{ piercing.price | currency:'CLP' }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

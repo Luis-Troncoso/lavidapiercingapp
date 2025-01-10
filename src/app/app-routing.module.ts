@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'administrador',
     loadChildren: () => import('./pages/administrador/administrador.module').then( m => m.AdministradorPageModule)
   },
+  {
+    path: 'piercings',
+    loadChildren: () => import('./pages/piercings/piercings.module').then( m => m.PiercingsPageModule)
+  },
 ];
 
 @NgModule({

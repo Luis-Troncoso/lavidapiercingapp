@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular'; // Importar el ToastController
 
 @Component({
   selector: 'app-login',
@@ -7,14 +10,86 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class LoginPage implements OnInit {
-ingresar() {
-throw new Error('Method not implemented.');
-}
-formularioLogin: any;
+  loginForm!: FormGroup;
+  errorMessage: string = '';
+  showPassword: boolean = false;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.maxLength(40),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(12),
+        ],
+      ],
+    });
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  async iniciarSesion() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+
+      // Aquí se simula el inicio de sesión
+      if (email === 'Lui.troncoso@duocuc.cl' && password === 'Contraseña1') {
+        this.errorMessage = '';
+        await this.showToast('¡Inicio de sesión exitoso!');
+        this.router.navigate(['/inicio']); // Cambiar a la página de inicio
+      } else {
+        this.errorMessage = 'Correo o contraseña incorrectos.';
+      }
+    } else {
+      this.displayErrors();
+    }
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, // El toast se mostrará por 2 segundos
+      position: 'bottom',
+      color: 'success', // Cambiar a 'danger' si es un mensaje de error
+    });
+    toast.present();
+  }
+
+  displayErrors() {
+    const errors = this.loginForm.controls;
+    if (errors['email'].errors) {
+      if (errors['email'].errors['required']) {
+        this.errorMessage = 'El correo es obligatorio.';
+      } else if (errors['email'].errors['email']) {
+        this.errorMessage = 'El formato del correo no es válido.';
+      } else if (errors['email'].errors['maxlength']) {
+        this.errorMessage = 'El correo no debe exceder 40 caracteres.';
+      }
+    } else if (errors['password'].errors) {
+      if (errors['password'].errors['required']) {
+        this.errorMessage = 'La contraseña es obligatoria.';
+      } else if (errors['password'].errors['minlength']) {
+        this.errorMessage = 'La contraseña debe tener al menos 8 caracteres.';
+      } else if (errors['password'].errors['maxlength']) {
+        this.errorMessage = 'La contraseña no debe exceder 12 caracteres.';
+      }
+    }
+  }
 }

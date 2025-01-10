@@ -1,44 +1,47 @@
 <ion-content class="login-container">
-  <ion-header></ion-header>
-
   <div class="header">
     <h1>LA VIDA PIERCINGS</h1>
-    <p>INICIA SESIÓN PARA CONTINUAR</p>
+    <p>Inicia sesión para continuar</p>
   </div>
 
   <div class="form-container">
-    <h2>INICIO SESIÓN</h2>
+    <h2>INICIO DE SESIÓN</h2>
 
-    <ion-item>
-      <ion-label position="floating">Correo</ion-label>
-      <ion-input type="email" placeholder="hello@reallygreatsite.com"></ion-input>
-    </ion-item>
+    <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input formControlName="email" type="email" placeholder="ingresa@tu.correo"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" placeholder="*****"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="*****">
+        </ion-input>
+        <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
+          <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+        </ion-button>
+      </ion-item>
 
-    <!-- Enlace para recuperar contraseña -->
-    <a class="forgot-password" routerLink="/recuperar">Recuperar contraseña</a>
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMessage" class="validation-error">
+        {{ errorMessage }}
+      </div>
 
-    <ion-button expand="block" shape="round" class="login-button">
-      INICIAR SESIÓN
-    </ion-button>
-  </div>
-
-  <div class="footer">
-    <!-- Logo en el pie de página -->
-    <div class="footer-logo">
-      <img src="assets/img/logo2.png" alt="La Vida Piercings">
-    </div>
+      <ion-button expand="block" shape="round" type="submit" class="login-button">
+        INICIAR SESIÓN
+      </ion-button>
+    </form>
+  </div> <!-- Closing form-container div -->
     
-    <!-- Enlace a la página de registro -->
-    <p class="register-link">
-      ¿No tienes una cuenta? <a routerLink="/register">Regístrate</a>
-    </p>
-  </div>
+    <div class="footer">
+      <!-- Logo en el pie de página -->
+      <div class="footer-logo">
+        <img src="assets/img/logo2.png" alt="La Vida Piercings">
+      </div>
+
+      <!-- Enlace a la página de registro -->
+      <p class="register-link">
+        ¿No tienes una cuenta? <a routerLink="/register">Regístrate</a>
+      </p>
+    </div>
 </ion-content>
-
-
-
