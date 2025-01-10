@@ -23,6 +23,18 @@ const routes: Routes = [
     path: 'recuperar',
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
   },
+  {
+    path: 'inicio',
+    loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+  },
+  {
+    path: 'agenda',
+    loadChildren: () => import('./pages/agenda/agenda.module').then( m => m.AgendaPageModule)
+  },
+  {
+    path: 'administrador',
+    loadChildren: () => import('./pages/administrador/administrador.module').then( m => m.AdministradorPageModule)
+  },
 ];
 
 @NgModule({
