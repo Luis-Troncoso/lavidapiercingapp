@@ -1,28 +1,36 @@
 .piercings-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 10px;
-  }
-  
-  ion-card {
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  ion-card img {
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  ion-card-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #00aaff;
-  }
-  
-  ion-card-content {
-    font-size: 16px;
-    color: #333;
-  }
-  
+  padding: 16px;
+}
+
+.piercing-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.piercing-card ion-item {
+  align-items: center;
+}
+
+.piercing-card ion-thumbnail img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.piercing-card ion-label h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #343a40;
+}
+
+.piercing-card ion-label p {
+  font-size: 16px;
+  margin: 4px 0 0;
+  color: #666;
+}

@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class PiercingsPage implements OnInit {
   piercings = [
     {
-      image: 'assets/img/piercing1.jpg',
+      image: 'assets/img/logo2.png',
       name: 'Piercing de Ceja',
       price: 10000,
     },

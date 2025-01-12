@@ -1,21 +1,18 @@
 .home-container {
-  background-image: url('/assets/img/background.jpg');
-  background-size: cover; /* Asegura que el fondo cubra toda la pantalla */
-  font-family: Arial, sans-serif;
-  color: #00aaff; /* Color principal de la app */
+  background-size: cover; 
+  font-family: Arial, sans-serif; 
   text-align: center;
   padding: 20px;
-  min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-/* Título principal */
 .header h1 {
   color: #00aaff;
+  margin-top: 80px;
   margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   font-size: 2rem;
 }
 
@@ -51,7 +48,7 @@ ion-card {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de transición */
-  height: 250px;
+  height: 100px;
 }
 
 ion-card:hover {
@@ -97,4 +94,18 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+.menu-footer {
+  margin-top: auto;
+  border-top: 1px solid #ccc;
+  background-color: #f8f9fa;
+}
+
+.logout-button {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.logout-button ion-icon {
+  color: #d9534f;
 }

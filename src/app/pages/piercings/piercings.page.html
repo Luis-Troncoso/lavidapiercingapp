@@ -1,20 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Piercings</ion-title>
-  </ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button routerLink="/inicio">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 </ion-header>
 
 <ion-content>
   <div class="piercings-container">
-    <ion-card *ngFor="let piercing of piercings">
-      <ion-img [src]="piercing.image"></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{ piercing.name }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Precio: {{ piercing.price | currency:'CLP' }}</p>
-      </ion-card-content>
+    <ion-card *ngFor="let piercing of piercings" class="piercing-card">
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img [src]="piercing.image" alt="{{ piercing.name }}">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ piercing.name }}</h2>
+          <p>Precio: {{ piercing.price | currency:'CLP' }}</p>
+        </ion-label>
+      </ion-item>
     </ion-card>
   </div>
 </ion-content>
-

@@ -49,11 +49,22 @@ export class LoginPage implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      // Aquí se simula el inicio de sesión
-      if (email === 'Lui.troncoso@duocuc.cl' && password === 'Contraseña1') {
+      // Credenciales de usuario normal
+      const userEmail = 'Lui.troncoso@duocuc.cl';
+      const userPassword = 'Contraseña1';
+
+      // Credenciales de administrador
+      const adminEmail = 'admin@duocuc.cl';
+      const adminPassword = 'Admin1234';
+
+      if (email === userEmail && password === userPassword) {
         this.errorMessage = '';
-        await this.showToast('¡Inicio de sesión exitoso!');
-        this.router.navigate(['/inicio']); // Cambiar a la página de inicio
+        await this.showToast('¡Inicio de sesión exitoso como usuario!');
+        this.router.navigate(['/inicio']); // Cambiar a la página de inicio de usuario
+      } else if (email === adminEmail && password === adminPassword) {
+        this.errorMessage = '';
+        await this.showToast('¡Inicio de sesión exitoso como administrador!');
+        this.router.navigate(['/administrador']); // Cambiar a la página de administrador
       } else {
         this.errorMessage = 'Correo o contraseña incorrectos.';
       }

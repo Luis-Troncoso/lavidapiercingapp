@@ -1,53 +1,64 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Agenda de Citas</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="agenda-container">
+  <ion-header>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/inicio">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-header>
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Agendar Cita</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Seleccionar Día</ion-label>
+          <ion-datetime
+            presentation="date"
+            [min]="minDate"
+            [max]="maxDate"
+            (ionChange)="filterWeekdays($event)"
+          ></ion-datetime>
+        </ion-item>
 
-<ion-content>
-  <div class="agenda-container">
-    <form (ngSubmit)="agendarCita()">
-      <!-- Selección de piercing -->
-      <ion-item>
-        <ion-label position="floating">Selecciona el Piercing</ion-label>
-        <ion-select [(ngModel)]="piercingSeleccionado" name="piercing" required>
-          <ion-select-option *ngFor="let piercing of piercings" [value]="piercing.name">
-            {{ piercing.name }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Seleccionar Hora</ion-label>
+          <ion-select
+            placeholder="Seleccionar Hora"
+            [(ngModel)]="selectedTime"
+          >
+            <ion-select-option *ngFor="let hora of horas">
+              {{ hora }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <!-- Selección de fecha y hora -->
-      <ion-item>
-        <ion-label position="floating">Fecha y Hora</ion-label>
-        <ion-datetime [(ngModel)]="fechaHora" name="fechaHora" required displayFormat="MMM DD, YYYY HH:mm"></ion-datetime>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Seleccionar Piercing</ion-label>
+          <ion-select
+            placeholder="Seleccionar Piercing"
+            [(ngModel)]="selectedPiercing"
+          >
+            <ion-select-option *ngFor="let piercing of piercings">
+              {{ piercing }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <!-- Selección del método de pago -->
-      <ion-item>
-        <ion-label>Metodo de Pago</ion-label>
-        <ion-select [(ngModel)]="metodoPago" name="metodoPago" required>
-          <ion-select-option value="efectivo">Efectivo</ion-select-option>
-          <ion-select-option value="transferencia">Transferencia</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Método de Pago</ion-label>
+          <ion-select
+            placeholder="Seleccionar Método"
+            [(ngModel)]="selectedPaymentMethod"
+          >
+            <ion-select-option value="efectivo">Efectivo</ion-select-option>
+            <ion-select-option value="transferencia">Transferencia</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-button expand="full" type="submit">Agendar Cita</ion-button>
-    </form>
-
-    <!-- Confirmación de cita -->
-    <div *ngIf="citaAgendada" class="confirmation">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Cita Agendada</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p><strong>Piercing:</strong> {{ piercingSeleccionado }}</p>
-          <p><strong>Fecha y Hora:</strong> {{ fechaHora | date: 'short' }}</p>
-          <p><strong>Método de Pago:</strong> {{ metodoPago === 'efectivo' ? 'Efectivo' : 'Transferencia' }}</p>
-        </ion-card-content>
-      </ion-card>
-    </div>
+        <ion-button expand="block" (click)="confirmarCita()">Confirmar Cita</ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
-
