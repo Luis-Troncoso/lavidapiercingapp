@@ -50,8 +50,8 @@ export class LoginPage implements OnInit {
       const { email, password } = this.loginForm.value;
 
       // Credenciales de usuario normal
-      const userEmail = 'Lui.troncoso@duocuc.cl';
-      const userPassword = 'Contraseña1';
+      const userEmail = 'lui.troncoso@duocuc.cl';
+      const userPassword = 'Luis1234';
 
       // Credenciales de administrador
       const adminEmail = 'admin@duocuc.cl';

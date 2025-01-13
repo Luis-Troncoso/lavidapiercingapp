@@ -9,24 +9,39 @@ import { Component, OnInit } from '@angular/core';
 export class PiercingsPage implements OnInit {
   piercings = [
     {
-      image: 'assets/img/logo2.png',
-      name: 'Piercing de Ceja',
+      image: 'assets/img/nostril.jpg',
+      name: 'NOSTRIL',
+      price: 8000,
+    },
+    {
+      image: 'assets/img/ombligo.png',
+      name: 'OMBLIGO',
       price: 10000,
     },
     {
-      image: 'assets/img/piercing2.jpg',
-      name: 'Piercing de Nariz',
-      price: 15000,
+      image: 'assets/img/industrial.jpg',
+      name: 'INDUSTRIAL',
+      price: 10000,
     },
     {
-      image: 'assets/img/piercing3.jpg',
-      name: 'Piercing de Labios',
-      price: 12000,
+      image: 'assets/img/septum.jpg',
+      name: 'SEPTUM',
+      price: 10000,
     },
     {
-      image: 'assets/img/piercing4.jpg',
-      name: 'Piercing de Ombligo',
-      price: 13000,
+      image: 'assets/img/ceja.jpg',
+      name: 'CEJA',
+      price: 10000,
+    },
+    {
+      image: 'assets/img/Helix.jpg',
+      name: 'HELIX',
+      price: 10000,
+    },
+    {
+      image: 'assets/img/labret.jpg',
+      name: 'LABRET',
+      price: 10000,
     },
   ];
 

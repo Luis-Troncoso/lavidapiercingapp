@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'piercings',
     loadChildren: () => import('./pages/piercings/piercings.module').then( m => m.PiercingsPageModule)
   },
+  {
+    path: '**',
+    redirectTo: 'login',
+  },
 ];
 
 @NgModule({
