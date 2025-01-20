@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
+import { roleGuard } from './guards/role.guard';
+
 
 const routes: Routes = [
   {
@@ -18,6 +21,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    , canActivate: [authGuard]
   },
   {
     path: 'recuperar',
@@ -33,7 +37,10 @@ const routes: Routes = [
   },
   {
     path: 'administrador',
-    loadChildren: () => import('./pages/administrador/administrador.module').then( m => m.AdministradorPageModule)
+    loadChildren: () => import('./pages/administrador/administrador.module').then( m => m.AdministradorPageModule),
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'admin' } //role requerido
+
   },
   {
     path: 'piercings',
