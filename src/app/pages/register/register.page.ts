@@ -1,134 +1,105 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';  // Importar el ToastController
+import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { AuthService } from '../../services/auth.service'; // Ajusta las rutas relativas
+
 
 @Component({
+  standalone: false, // Esto indica que el componente es independiente
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
-  standalone: false,
 })
 export class RegisterPage implements OnInit {
-  registroForm!: FormGroup;
-  errorMessage: string = '';
-  showPassword: boolean = false;
-  showRepeatPassword: boolean = false;
+  registerForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private toastController: ToastController 
-  ) {}
-
-  ngOnInit() {
-    this.registroForm = this.fb.group({
-      username: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(20),
-          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z.]*$/), // Mayúsculas, minúsculas, puntos únicamente
+    private navCtrl: NavController,
+    private alertController: AlertController,
+    private authService: AuthService // Inyectar AuthService
+  ) {
+    // Crear el formulario de registro
+    this.registerForm = this.fb.group(
+      {
+        firstName: [
+          '',
+          [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
         ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-          Validators.maxLength(40),
+        lastName: [
+          '',
+          [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
         ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(12),
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,12}$/,
-          ), // Mayúsculas, minúsculas y números, sin caracteres especiales
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+          ],
         ],
-      ],
-      repeatPassword: ['', Validators.required],
-    });
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator }
+    );
   }
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  // Validador para confirmar contraseñas
+  passwordMatchValidator(group: FormGroup) {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { notMatching: true };
   }
 
-  toggleRepeatPasswordVisibility() {
-    this.showRepeatPassword = !this.showRepeatPassword;
-  }
+  // Método para registrar al usuario usando Firebase
+  async onRegister() {
+    if (this.registerForm.valid) {
+      const { firstName, lastName, email, password } = this.registerForm.value;
 
-  async registrarse() {
-    if (this.registroForm.valid) {
-      const { password, repeatPassword } = this.registroForm.value;
+      try {
+        // Llamar al servicio de autenticación
+        await this.authService.signUp(firstName, lastName, email, password);
 
-      if (password !== repeatPassword) {
-        this.errorMessage = 'Las contraseñas no coinciden.';
-        return;
+        // Mostrar la alerta de éxito
+        await this.showRegisterAlert();
+
+        // Navegar al login después del registro exitoso
+        this.goToLogin();
+      } catch (error) {
+        // Manejo de errores de Firebase
+        this.showErrorAlert((error as any).message);
       }
-
-      // Procesar el registro
-      this.errorMessage = '';
-      await this.showToast('¡Registro completado con éxito!');  // Mostrar el toast
-      this.router.navigate(['/login']);
-    } else {
-      this.displayErrors();
     }
   }
 
-  async showToast(message: string) {
-    const toast = await this.toastController.create({
+  // Método para mostrar la alerta de éxito
+  async showRegisterAlert() {
+    const alert = await this.alertController.create({
+      header: '¡Cuenta creada con éxito!',
+      message: 'Tu cuenta se ha creado correctamente.',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
+  // Método para mostrar errores
+  async showErrorAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Error en el registro',
       message: message,
-      duration: 2000, // El toast se mostrará por 2 segundos
-      position: 'bottom', // Puedes usar 'top', 'middle', o 'bottom' para la posición
-      color: 'success', // El color del toast (puedes elegir 'success', 'danger', etc.)
+      buttons: ['OK'],
     });
-    toast.present();
+
+    await alert.present();
   }
 
-  displayErrors() {
-    const errors = this.registroForm.controls;
-    if (errors['username'].errors) {
-      if (errors['username'].errors['required']) {
-        this.errorMessage = 'El nombre de usuario es obligatorio.';
-      } else if (errors['username'].errors['minlength']) {
-        this.errorMessage =
-          'El nombre de usuario debe tener al menos 10 caracteres.';
-      } else if (errors['username'].errors['maxlength']) {
-        this.errorMessage =
-          'El nombre de usuario no debe exceder 20 caracteres.';
-      } else if (errors['username'].errors['pattern']) {
-        this.errorMessage =
-          'El nombre de usuario debe contener mayúsculas, minúsculas y puntos únicamente.';
-      }
-    } else if (errors['email'].errors) {
-      if (errors['email'].errors['required']) {
-        this.errorMessage = 'El correo es obligatorio.';
-      } else if (errors['email'].errors['email']) {
-        this.errorMessage = 'El formato del correo no es válido.';
-      } else if (errors['email'].errors['maxlength']) {
-        this.errorMessage = 'El correo no debe exceder 40 caracteres.';
-      }
-    } else if (errors['password'].errors) {
-      if (errors['password'].errors['required']) {
-        this.errorMessage = 'La contraseña es obligatoria.';
-      } else if (errors['password'].errors['minlength']) {
-        this.errorMessage =
-          'La contraseña debe tener al menos 8 caracteres.';
-      } else if (errors['password'].errors['maxlength']) {
-        this.errorMessage =
-          'La contraseña no debe exceder 12 caracteres.';
-      } else if (errors['password'].errors['pattern']) {
-        this.errorMessage =
-          'La contraseña debe contener mayúsculas, minúsculas y números, y no debe incluir caracteres especiales.';
-      }
-    } else if (errors['repeatPassword'].errors) {
-      this.errorMessage = 'Debe repetir la contraseña.';
-    }
+  // Navegar a la página de login
+  goToLogin() {
+    this.navCtrl.navigateBack('/login');
   }
+
+  ngOnInit() {}
 }

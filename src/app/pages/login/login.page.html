@@ -1,51 +1,40 @@
-<ion-content class="login-container">
+<ion-content>
   <div class="header">
-    <h1>LA VIDA PIERCINGS</h1>
-    <p>Inicia sesión para continuar</p>
+    <h1>LA VIDA PIERCING</h1>
+    <h3>ingresa tus datos para iniciar sesion</h3>
   </div>
+  <ion-content class="form-page">
+    <div class="form-container">
+      <h2 class="form-title">INICIO SESION</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+        <div class="input-group">
+          <label for="email">Correo Electrónico</label>
+          <input id="email" formControlName="email" type="email" placeholder="Correo Electrónico">
+          <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="error-message">
+            <div *ngIf="loginForm.controls['email'].hasError('required')">El correo es obligatorio.</div>
+            <div *ngIf="loginForm.controls['email'].hasError('email')">El formato del correo no es válido.</div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="password">Contraseña</label>
+          <input id="password" formControlName="password" [type]="showPassword ? 'text' : 'password'"
+            placeholder="Contraseña">
 
-  <div class="form-container">
-    <h2>INICIO DE SESIÓN</h2>
-
-    <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
-      <ion-item>
-        <ion-label position="floating">Correo</ion-label>
-        <ion-input formControlName="email" type="email" placeholder="ingresa@tu.correo"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="*****">
-        </ion-input>
-        <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
-          <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <!-- Mensaje de error -->
-      <div *ngIf="errorMessage" class="validation-error">
+          <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched"
+            class="error-message">
+            <div *ngIf="loginForm.controls['password'].hasError('required')">La contraseña es obligatoria.</div>
+          </div>
+        </div>
+        <button type="submit" class="submit-button">Iniciar Sesión</button>
+      </form>
+      <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>
-
-      <ion-button expand="block" shape="round" type="submit" class="login-button">
-        INICIAR SESIÓN
-      </ion-button>
-      <div class="link-to-login">
-        <a routerLink="/recuperar">olvide mi contraseña.</a>
-      </div>
-    </form>
-  </div>
-  
-
-    
-    <div class="footer">
-      <div class="footer-logo">
-        <img src="assets/img/logo2.png" alt="La Vida Piercings">
-      </div>
-
-      <!-- Enlace a la página de registro -->
-      <p class="register-link">
-        ¿No tienes una cuenta? <a routerLink="/register">Regístrate</a>
+      <a routerLink="/recuperar" class="forgot-password">¿Olvidaste tu contraseña?</a>
+      <p class="message-container">
+        ¿No tienes una cuenta?
+        <a routerLink="/register" class="create-account">Crear una cuenta</a>
       </p>
     </div>
+  </ion-content>
 </ion-content>

@@ -66,6 +66,24 @@
       </ion-card-content>
     </ion-card>
   </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Lista de Piercings</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let piercing of piercings">
+          <ion-label>
+            <h2>{{ piercing.nombre }}</h2>
+            <p>Precio: ${{ piercing.precio }}</p>
+            <img [src]="piercing.imagenUrl" alt="{{ piercing.nombre }}" style="height: 50px;" />
+          </ion-label>
+          <ion-button color="warning" (click)="editarPiercing(piercing)">Editar</ion-button>
+          <ion-button color="danger" (click)="editarPiercing(piercing.id)">Eliminar</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 <ion-footer>

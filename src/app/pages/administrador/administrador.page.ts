@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -8,10 +7,11 @@ import { Router } from '@angular/router';
   selector: 'app-administrador',
   templateUrl: './administrador.page.html',
   styleUrls: ['./administrador.page.scss'],
-  standalone:false,
+  standalone: false,
 })
 export class AdministradorPage implements OnInit {
-  citas: any[] = []; // Simulación de citas solicitadas por clientes
+  citas: any[] = []; // Citas cargadas desde la pestaña de agenda
+  piercings: any[] = []; // Piercings gestionados desde la pestaña de piercings
   piercingForm!: FormGroup;
   imagenSeleccionada: File | null = null;
 
@@ -22,7 +22,23 @@ export class AdministradorPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Simulación de datos de citas
+    // Inicialización de citas (simulación de carga desde backend o API)
+    this.cargarCitas();
+
+    // Inicialización del formulario para agregar piercings
+    this.piercingForm = this.fb.group({
+      nombre: ['', [Validators.required]],
+      precio: [
+        '',
+        [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')],
+      ],
+    });
+
+    // Cargar piercings iniciales (simulación de carga desde backend o API)
+    this.cargarPiercings();
+  }
+
+  cargarCitas() {
     this.citas = [
       {
         cliente: 'Luis Troncoso',
@@ -37,14 +53,13 @@ export class AdministradorPage implements OnInit {
         piercing: 'Piercing en la ceja',
       },
     ];
+  }
 
-    this.piercingForm = this.fb.group({
-      nombre: ['', [Validators.required]],
-      precio: [
-        '',
-        [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')],
-      ],
-    });
+  cargarPiercings() {
+    this.piercings = [
+      { nombre: 'Piercing de ceja', precio: 5000, imagen: 'ceja.jpg' },
+      { nombre: 'Piercing de nariz', precio: 3000, imagen: 'nariz.jpg' },
+    ];
   }
 
   aceptarCita(cita: any) {
@@ -61,7 +76,7 @@ export class AdministradorPage implements OnInit {
     this.imagenSeleccionada = event.target.files[0] || null;
   }
 
-  async agregarPiercing() {
+  agregarPiercing() {
     if (this.piercingForm.valid && this.imagenSeleccionada) {
       const nuevoPiercing = {
         nombre: this.piercingForm.value.nombre,
@@ -69,8 +84,7 @@ export class AdministradorPage implements OnInit {
         imagen: this.imagenSeleccionada.name, // Solo simula el nombre de la imagen
       };
 
-      // Aquí puedes guardar el piercing en la base de datos o una API
-      console.log('Piercing agregado:', nuevoPiercing);
+      this.piercings.push(nuevoPiercing); // Agregar el piercing a la lista
 
       this.showToast('Piercing agregado correctamente.');
       this.piercingForm.reset();
@@ -81,6 +95,22 @@ export class AdministradorPage implements OnInit {
         'danger'
       );
     }
+  }
+
+  editarPiercing(piercing: any) {
+    this.piercingForm.patchValue({
+      nombre: piercing.nombre,
+      precio: piercing.precio,
+    });
+    this.imagenSeleccionada = null; // Resetear imagen al editar
+
+    // Eliminar el piercing original de la lista temporalmente
+    this.piercings = this.piercings.filter((p) => p !== piercing);
+  }
+
+  eliminarPiercing(piercing: any) {
+    this.piercings = this.piercings.filter((p) => p !== piercing);
+    this.showToast('Piercing eliminado correctamente.', 'warning');
   }
 
   cerrarSesion() {

@@ -1,65 +1,62 @@
-<ion-content class="login-container">
+<ion-content>
   <div class="header">
-    <h1>LA VIDA PIERCINGS</h1>
-    <p>Regístrate para continuar</p>
+    <h1>LA VIDA PIERCING</h1>
+    <h3>ingresa tus datos para iniciar sesion</h3>
   </div>
-
+<ion-content class="form-page">
   <div class="form-container">
-    <h2>REGISTRO</h2>
+    <h1 class="form-title">REGISTRO</h1>
 
-    <form [formGroup]="registroForm" (ngSubmit)="registrarse()">
-      <ion-item>
-        <ion-label position="floating">Nombre de usuario</ion-label>
-        <ion-input formControlName="username" placeholder="Ingresa tu nombre"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Correo</ion-label>
-        <ion-input formControlName="email" type="email" placeholder="ingresa@tu.correo"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input
-          formControlName="password"
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="*****">
-        </ion-input>
-        <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
-          <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Repetir Contraseña</ion-label>
-        <ion-input
-          formControlName="repeatPassword"
-          [type]="showRepeatPassword ? 'text' : 'password'"
-          placeholder="*****">
-        </ion-input>
-        <ion-button fill="clear" slot="end" (click)="toggleRepeatPasswordVisibility()">
-          <ion-icon [name]="showRepeatPassword ? 'eye-off' : 'eye'"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <!-- Mensaje de error -->
-      <div *ngIf="errorMessage" class="validation-error">
-        {{ errorMessage }}
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="input-group">
+        <label for="firstName">Nombre</label>
+        <input id="firstName" formControlName="firstName" type="text" placeholder="Nombre">
+        <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+          class="error-message">
+          El nombre es obligatorio.
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="lastName">Apellido</label>
+        <input id="lastName" formControlName="lastName" type="text" placeholder="Apellido">
+        <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+          class="error-message">
+          El apellido es obligatorio.
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="email">Correo Electrónico</label>
+        <input id="email" formControlName="email" type="email" placeholder="Correo Electrónico">
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+          Ingresa un correo válido.
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="password">Contraseña</label>
+        <input id="password" formControlName="password" type="password" placeholder="Contraseña">
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          class="error-message">
+          La contraseña es obligatoria.
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="confirmPassword">Confirmar Contraseña</label>
+        <input id="confirmPassword" formControlName="confirmPassword" type="password"
+          placeholder="Confirmar Contraseña">
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+          class="error-message">
+          Las contraseñas deben coincidir.
+        </div>
       </div>
 
-      <ion-button expand="block" shape="round" type="submit" class="login-button">
-        REGISTRARSE
-      </ion-button>
+      <button expand="block" type="submit" class="submit-button" [disabled]="registerForm.invalid">Registrar</button>
     </form>
 
-    <div class="link-to-login">
-      <a routerLink="/login">Ya tengo una cuenta.</a>
-    </div>
-  </div>
 
-  <div class="footer-logo">
-    <img src="assets/img/logo2.png" alt="La Vida Piercings">
+    <p class="message-container">
+      ¿Ya tienes una cuenta?
+      <a routerLink="/login" class="create-account">iniciar sesion</a>
+    </p>
+
   </div>
 </ion-content>
-
-
