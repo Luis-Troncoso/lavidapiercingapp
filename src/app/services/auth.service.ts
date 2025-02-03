@@ -1,33 +1,61 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { User } from '../models/user.model';
+
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {}
 
-  async signUp(firstName: string, lastName: string, email: string, password: string) {
-    try {
-      // Crear usuario en Firebase Authentication
-      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      const user = userCredential.user;
+  constructor(
+    private Auth: AngularFireAuth,
+    private Firestore: AngularFirestore,
+  ) { }
 
-      if (user) {
-        // Guardar datos adicionales del usuario en Firestore
-        await this.firestore.collection('users').doc(user.uid).set({
-          firstName,
-          lastName,
-          email,
-          role: 'estandar', // Agregar rol predeterminado
-          uid: user.uid,
-        });
-      }
-      return user;
-    } catch (error) {
-      console.error('Error durante el registro:', error);
-      throw error;
-    }
+  // Login
+  Login(email: string, password: string) : Promise<any> {
+    return this.Auth.signInWithEmailAndPassword(email, password);
   }
+
+  // Register
+  Register(user: User) : Promise<any> {
+    return this.Auth.createUserWithEmailAndPassword(user.email, user.password)
+    .then ((cred) => {
+      return this.Firestore.collection('users').doc(cred.user?.uid).set({
+        username: user.username,
+        email: user.email,
+        profilePicture: '',
+        role: 'usuario',
+      });
+  });
+  }
+
+  // recuperar contraseña 
+  recoverPassword(email: string) : Promise <void> {
+    return this.Auth.sendPasswordResetEmail(email);
+  }
+
+  // Logout
+  logout() : Promise<void> {
+    return this.Auth.signOut();
+  }
+
+  //obtener el UID del usuario actual
+  getUserId() : Promise<string | null> {
+    return new Promise ((resolve,reject) => {
+      this.Auth.onAuthStateChanged ((user) => {
+        if (user) {
+          resolve(user.uid);
+        } else {
+          resolve(null);
+        }
+
+    });
+  });
+  }
+
 }
+
+
